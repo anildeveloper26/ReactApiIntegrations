@@ -1,0 +1,1 @@
+import{u as n,R as r,j as a,c as o,a as s}from"./main-BQdybgvi.js";const u=s("src_routes_index_tsx--updateCount_createServerFn_handler","/_serverFn"),c=o({method:"POST"}).handler(u);function i(){const e=n(),t=r.useLoaderData();return a.jsxs("button",{type:"button",onClick:()=>{c({data:1}).then(()=>{e.invalidate()})},children:["Add 1 to ",t,"?"]})}export{i as component};
