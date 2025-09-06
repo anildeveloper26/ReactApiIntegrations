@@ -16,9 +16,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  plugins: [react(), tailwindcss(),
+  plugins: [ tailwindcss(),
     tsConfigPaths(),
     tanstackStart({ customViteReactPlugin: true }),
-    viteReact(),
+    react(),
   ]
 })
