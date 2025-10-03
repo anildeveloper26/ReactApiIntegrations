@@ -1,30 +1,41 @@
-"use client"
+import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 
-import { ColumnDef } from "@tanstack/react-table"
+// Define the data types
+type DocumentUser = {
+  document_completed: boolean;
+};
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-  id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
-}
+export type TableItem = {
+  id: string;
+  document_users: DocumentUser[];
+};
 
-export const columns = [
-  {
-    id: "1",
-    accessorKey: "status",
-    header: "Status",
-  },
-  {
-    id: "2",
-    accessorKey: "email",
-    header: "Email",
-  },
-  {
-    id: "3",
-    accessorKey: "amount",
-    header: "Amount",
-  },
-]
+const columnHelper = createColumnHelper<TableItem>();
+
+export const columns: ColumnDef<TableItem>[] = [
+  // Column 1: Row number (Display Column)
+  columnHelper.display({
+    id: "row_number",
+    header: "No.",
+    cell: (props) => props.row.index + 1,
+  }),
+
+  // Column 2: Document Status (Display Column)
+  columnHelper.display({
+    id: "document_status",
+    header: "Document Status",
+    cell: (props) => {
+      const item = props.row.original;
+      const documentUsers = item?.document_users;
+
+      if (documentUsers?.length > 0) {
+        const isCompleted = documentUsers.every(
+          (Dusers) => Dusers.document_completed === true
+        );
+        return <div>{isCompleted ? "Completed" : "Not Completed"}</div>;
+      }
+
+      return <div>No Document</div>;
+    },
+  }),
+];
